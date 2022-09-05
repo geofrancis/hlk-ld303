@@ -34,7 +34,6 @@ void readradar(){
                 int k = (buf[5] << 8) + buf[6];
                 int micro = buf[7];
                 int off = buf[8];
-                printf("distance=%3d,present=%d,strength=%5d,micro=%d,off=%d\n", dist, pres, k, micro, off);
                 break;
         distances = 0.1 * dist;
             }
