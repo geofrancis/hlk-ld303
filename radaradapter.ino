@@ -1,10 +1,5 @@
 #include <Wire.h>
 #include "ld303-protocol.h"
-#include "Arduino.h"
-#include "editline.h"
-#include "cmdproc.h"
-
-
 
 //Standard MaxsonarI2CXL address
 #define I2C_SLAVE_ADDR  0x70  
@@ -20,27 +15,18 @@ const int numReadings = 10;
 
 
 int distances = 0;
-int distance = 0;
 unsigned char CS;
 uint8_t Index;
 byte received;
-int readings[numReadings]; 
-int readIndex = 0; 
-int total = 0;  
-int average = 0; 
-    uint8_t buf[32];
-    uint8_t data[16];
+uint8_t buf[32];
+uint8_t data[16];
 
 void readradar(){     
      // process incoming data from radar
      while (Serial.available()) {
         uint8_t c = Serial.read();
-
-        // run receive state machine
-        bool done = protocol.process_rx(c);
-        if (done) {
-            int len = protocol.get_data(buf);
-            uint8_t cmd = buf[0];
+        int len = protocol.get_data(buf);
+        uint8_t cmd = buf[0];
             switch (cmd) {
             case 0xD3:
                 int dist = (buf[1] << 8) + buf[2];
@@ -54,8 +40,6 @@ void readradar(){
             }
         }
     }
-}
-
      
 
 //look for i2c read read request
